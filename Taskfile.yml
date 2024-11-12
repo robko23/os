@@ -1,0 +1,36 @@
+version: '3'
+
+vars:
+    REGISTRY: v2.registry.fohet.cz
+    REGISTRY_NAMESPACE: robin_ilyk
+    IMAGE_NAME_NTB: os-ntb
+    TAG_DATEPART:
+        sh: date +%Y.%m.%d
+    TAG_SUMPART:
+        sh: sha256sum build.sh | awk '{print substr($0, 1, 6)}'
+    TAG: "{{.TAG_DATEPART}}-{{.TAG_SUMPART}}"
+    IMG_NTB: "{{.REGISTRY}}/{{.REGISTRY_NAMESPACE}}/{{.IMAGE_NAME_NTB}}:{{.TAG}}"
+
+tasks:
+    default:
+        deps:
+            - task: ntb
+
+    ntb:
+        cmds:
+            - task: build-ntb
+            - task: push-ntb
+
+    build-ntb:
+        requires:
+            vars:
+                - IMG_NTB
+        cmds:
+            - docker buildx build 
+                -f Containerfile 
+                --tag {{.IMG_NTB}}
+                --load .
+
+    push-ntb:
+        cmds:
+            - docker push {{.IMG_NTB}}
