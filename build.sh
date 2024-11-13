@@ -17,11 +17,6 @@ curl -o /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:peterwu:rendezvous.repo
 # Docker repos
 curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora/docker-ce.repo
 
-# Maybe don't install these?
-# docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
-# We'll see
-#
-# Flatpak alternatives: evolution evolution-ews firefox
 # Maybe in dev env container: mold 
 # https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv0.31.1/infisical_0.31.1_linux_amd64.rpm
 # curl -1sLf 'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.rpm.sh' | sudo -E bash
@@ -31,7 +26,8 @@ rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-
 rpm-ostree install \
 	bibata-cursor-themes gnome-tweaks fira-code-fonts \
 	earlyoom pam-u2f openssl \
-	fish ripgrep podman-compose neovim go-task eza bat yubikey-manager fd-find distrobox
+	fish ripgrep podman-compose neovim go-task eza bat yubikey-manager fd-find distrobox \
+	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 TEMPDIR=`mktemp -d`
 
@@ -91,6 +87,14 @@ mv completions/tldr.fish /usr/share/fish/completions/tldr.fish
 rm -rf $TEMPDIR
 # ------------ END: INSTALL CUSTOM PROGRAMS ------------
 
+
+# ------------ START: SETUP SYMLINKS ------------
+ln -s /usr/bin/go-task /usr/bin/task
+ln -s /usr/bin/nvim /usr/bin/vim
+ln -s /usr/bin/nvim /usr/bin/vi
+# ------------ END: SETUP SYMLINKS ------------
+
+
 # ------------ START: CONFIGURE EDITOR ------------
 rm /etc/profile.d/nano-default-editor.sh
 rm /etc/profile.d/nano-default-editor.csh
@@ -108,10 +112,9 @@ EOF
 
 #### Systemd
 
-# See above
-# systemctl enable docker
+systemctl enable docker
 
-#### Flatpaks
+#### Flatpaks - won't install in build-step
 
 # flatpak install -y com.bitwarden.desktop
 # flatpak install -y com.github.tchx84.Flatseal
