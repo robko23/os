@@ -29,11 +29,10 @@ rpm-ostree install \
 	fish ripgrep podman-compose neovim go-task eza bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+# ------------ START: INSTALL CUSTOM PROGRAMS ------------
 TEMPDIR=`mktemp -d`
 
 cd $TEMPDIR
-
-# ------------ START: INSTALL CUSTOM PROGRAMS ------------
 
 BINDIR="/usr/bin"
 
@@ -86,6 +85,22 @@ mv completions/tldr.fish /usr/share/fish/completions/tldr.fish
 
 rm -rf $TEMPDIR
 # ------------ END: INSTALL CUSTOM PROGRAMS ------------
+
+
+# ------------ START: INSTALL FIRA CODE NERD FONT ------------
+TEMPDIR=`mktemp -d`
+cd $TEMPDIR
+
+curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraMono.zip
+unzip FiraMono.zip
+rm FiraMono.zip
+mkdir -p /usr/local/share/fonts/FiraMono
+cp * /usr/local/share/fonts/FiraMono/
+
+rm -rf $TEMPDIR
+
+fc-cache -fr
+# ------------ END: INSTALL FIRA CODE NERD FONT ------------
 
 
 # ------------ START: SETUP SYMLINKS ------------
