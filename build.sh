@@ -24,7 +24,7 @@ curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora
 #### Install packages
 rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-common
 rpm-ostree install \
-	bibata-cursor-themes gnome-tweaks fira-code-fonts evolution evolution-ews \
+	bibata-cursor-themes gnome-tweaks fira-code-fonts \ # evolution evolution-ews \
 	earlyoom pam-u2f openssl \
 	fish ripgrep podman-compose neovim go-task eza bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
@@ -36,7 +36,7 @@ cd $TEMPDIR
 
 BINDIR="/usr/bin"
 
-ZELLIJ_VERSION="0.40.1"
+ZELLIJ_VERSION="0.41.2"
 curl -LO https://github.com/zellij-org/zellij/releases/download/v$ZELLIJ_VERSION/zellij-x86_64-unknown-linux-musl.tar.gz
 tar xzvf zellij-x86_64-unknown-linux-musl.tar.gz
 chmod +x ./zellij
@@ -48,7 +48,7 @@ bzip2 -d autorestic_${AUTORESTIC_VERSION}_linux_amd64.bz2
 chmod +x autorestic_${AUTORESTIC_VERSION}_linux_amd64
 mv autorestic_${AUTORESTIC_VERSION}_linux_amd64 $BINDIR/autorestic
 
-RESTIC_VERSION="0.17.1"
+RESTIC_VERSION="0.17.3"
 curl -LO https://github.com/restic/restic/releases/download/v$RESTIC_VERSION/restic_${RESTIC_VERSION}_linux_amd64.bz2
 bzip2 -d restic_${RESTIC_VERSION}_linux_amd64.bz2
 chmod +x restic_${RESTIC_VERSION}_linux_amd64
@@ -77,7 +77,6 @@ mv cheat-linux-amd64 $BINDIR/cheat
 TLRC_VERSION="1.9.3"
 curl -LO https://github.com/tldr-pages/tlrc/releases/download/v${TLRC_VERSION}/tlrc-v${TLRC_VERSION}-x86_64-unknown-linux-musl.tar.gz
 tar -xzvf tlrc-v${TLRC_VERSION}-x86_64-unknown-linux-musl.tar.gz
-# /usr/share/bash-completion/completions/
 chmod +x tldr
 mv tldr $BINDIR/tldr
 mv completions/tldr.bash /usr/share/bash-completion/completions/tldr
@@ -88,18 +87,18 @@ rm -rf $TEMPDIR
 
 
 # ------------ START: INSTALL FIRA CODE NERD FONT ------------
-TEMPDIR=`mktemp -d`
-cd $TEMPDIR
-
-curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraMono.zip
-unzip FiraMono.zip
-rm FiraMono.zip
-mkdir -p /usr/local/share/fonts/FiraMono
-cp * /usr/local/share/fonts/FiraMono/
-
-rm -rf $TEMPDIR
-
-fc-cache -fr
+# TEMPDIR=`mktemp -d`
+# cd $TEMPDIR
+#
+# curl -LO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraMono.zip
+# unzip FiraMono.zip
+# rm FiraMono.zip
+# mkdir -p /usr/local/share/fonts/FiraMono
+# cp * /usr/local/share/fonts/FiraMono/
+#
+# rm -rf $TEMPDIR
+#
+# fc-cache -fr
 # ------------ END: INSTALL FIRA CODE NERD FONT ------------
 
 
