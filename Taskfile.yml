@@ -16,6 +16,16 @@ tasks:
         deps:
             - task: ntb
 
+    getver-*:
+        vars:
+            REPO: "{{index .MATCH 0}}"
+        cmds:
+            - |
+                curl -L \
+                  -H "Accept: application/vnd.github+json" \
+                  -H "X-GitHub-Api-Version: 2022-11-28" \
+                  https://api.github.com/repos/{{.REPO}}/releases | jq -r 'map(select (.prerelease == false)) | .[0].tag_name'
+
     ntb:
         cmds:
             - task: build-ntb
