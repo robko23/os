@@ -4,17 +4,20 @@ vars:
     REGISTRY: v2.registry.fohet.cz
     REGISTRY_NAMESPACE: robin_ilyk
     IMAGE_NAME_NTB: os-ntb
+    IMAGE_NAME_WORKSTATION: os-workstation
     TAG_DATEPART:
         sh: date +%Y.%m.%d
     TAG_SUMPART:
         sh: sha256sum build.sh | awk '{print substr($0, 1, 6)}'
     TAG: "{{.TAG_DATEPART}}-{{.TAG_SUMPART}}"
     IMG_NTB: "{{.REGISTRY}}/{{.REGISTRY_NAMESPACE}}/{{.IMAGE_NAME_NTB}}:{{.TAG}}"
+    IMG_WORKSTATION: "{{.REGISTRY}}/{{.REGISTRY_NAMESPACE}}/{{.IMAGE_NAME_WORKSTATION}}:{{.TAG}}"
 
 tasks:
     default:
         deps:
             - task: ntb
+            - task: workstation
 
     getver-*:
         vars:
@@ -31,16 +34,54 @@ tasks:
             - task: build-ntb
             - task: push-ntb
 
+    workstation:
+        cmds:
+            - task: build-workstation
+            - task: push-workstation
+
+    build-workstation:
+        vars:
+          SOURCE_SUFFIX: "-nvidia"
+        requires:
+            vars:
+                - IMG_WORKSTATION
+                - SOURCE_SUFFIX
+        cmds:
+            - task: build
+              vars:
+                  TAG: "{{.IMG_WORKSTATION}}"
+                  SOURCE_SUFFIX: "{{.SOURCE_SUFFIX}}"
+
     build-ntb:
+        vars:
+          SOURCE_SUFFIX: "-main"
         requires:
             vars:
                 - IMG_NTB
+                - SOURCE_SUFFIX
+        cmds:
+            - task: build
+              vars:
+                  TAG: "{{.IMG_NTB}}"
+                  SOURCE_SUFFIX: "{{.SOURCE_SUFFIX}}"
+
+    build:
+        internal: true
+        requires:
+            vars:
+                - TAG
+                - SOURCE_SUFFIX
         cmds:
             - docker buildx build 
                 -f Containerfile 
-                --tag {{.IMG_NTB}}
+                --build-arg SOURCE_SUFFIX={{.SOURCE_SUFFIX}}
+                --tag {{.TAG}}
                 --load .
 
     push-ntb:
         cmds:
             - docker push {{.IMG_NTB}}
+
+    push-workstation:
+        cmds:
+            - docker push {{.IMG_WORKSTATION}}

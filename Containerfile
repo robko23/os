@@ -1,6 +1,4 @@
 ## 1. BUILD ARGS
-# These allow changing the produced image by passing different build args to adjust
-# the source from which your image is built.
 # Build args can be provided on the commandline when building locally with:
 #   podman build -f Containerfile --build-arg FEDORA_VERSION=40 -t local-image
 
@@ -34,7 +32,7 @@ ARG SOURCE_IMAGE="silverblue"
 # - stable-nvidia-zfs
 # - (and the above with testing rather than stable)
 # ARG SOURCE_SUFFIX="-nvidia"
-ARG SOURCE_SUFFIX="-main"
+ARG SOURCE_SUFFIX
 
 ## SOURCE_TAG arg must be a version built for the specific image: eg, 39, 40, gts, latest
 ARG SOURCE_TAG="41"
