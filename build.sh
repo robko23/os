@@ -24,8 +24,8 @@ curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora
 #### Install packages
 rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-common
 rpm-ostree install \
-	bibata-cursor-themes gnome-tweaks fira-code-fonts keepassxc \
-	earlyoom pam-u2f openssl \
+	bibata-cursor-themes gnome-tweaks fira-code-fonts keepassxc openrgb \
+	earlyoom pam-u2f openssl python3-pip \
 	fish ripgrep podman-compose neovim go-task eza bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 

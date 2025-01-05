@@ -33,11 +33,17 @@ tasks:
         cmds:
             - task: build-ntb
             - task: push-ntb
+            -   task: rebase
+                vars:
+                    IMAGE: "{{.IMG_NTB}}:{{.TAG}}"
 
     workstation:
         cmds:
-            - task: build-workstation
-            - task: push-workstation
+            -   task: build-workstation
+            -   task: push-workstation
+            -   task: rebase
+                vars:
+                    IMAGE: "{{.IMG_WORKSTATION}}:{{.TAG}}"
 
     build-workstation:
         vars:
@@ -45,7 +51,6 @@ tasks:
         requires:
             vars:
                 - IMG_WORKSTATION
-                - SOURCE_SUFFIX
         cmds:
             - task: build
               vars:
@@ -58,7 +63,6 @@ tasks:
         requires:
             vars:
                 - IMG_NTB
-                - SOURCE_SUFFIX
         cmds:
             - task: build
               vars:
@@ -85,3 +89,9 @@ tasks:
     push-workstation:
         cmds:
             - docker push {{.IMG_WORKSTATION}}
+
+    rebase:
+        requires:
+            - IMAGE
+        cmds:
+            - "sudo rpm-ostree rebase ostree-unverified-registry:{{.IMAGE}}"
