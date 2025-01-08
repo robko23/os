@@ -92,6 +92,7 @@ tasks:
 
     rebase:
         requires:
-            - IMAGE
+            vars:
+                - IMAGE
         cmds:
             - "sudo rpm-ostree rebase ostree-unverified-registry:{{.IMAGE}}"
