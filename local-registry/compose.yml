@@ -1,0 +1,12 @@
+name: docker-registry
+services:
+    registry:
+        ports:
+            - 5000:5000
+        restart: always
+        container_name: registry
+        volumes:
+            - "./registry-config.yml:/etc/distribution/config.yml:ro"
+            - "./dist:/certs:ro"
+        image: registry:2
+        command: serve /etc/distribution/config.yml

@@ -1,0 +1,45 @@
+version: 3
+
+tasks:
+    setup_dist_dir:
+        internal: true
+        cmds:
+            - mkdir dist
+        status:
+            - test -d dist
+
+    setup_mkcert:
+        status:
+            - test -f dist/mkcert
+        deps:
+            - task: setup_dist_dir
+        cmds:
+            - curl -L https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64 -o dist/mkcert
+            - chmod +x dist/mkcert
+
+    install_mkcert:
+        deps:
+            - task: setup_mkcert
+        status:
+            - test -n "$(find /etc/pki/ca-trust/source/anchors/ -maxdepth 1 -type f -name 'mkcert_development_*.pem' -print -quit)"
+        cmds:
+            - dist/mkcert -install
+
+    create_localhost_cert:
+        deps:
+            - task: install_mkcert
+        status:
+            - test -f localhost.pem
+            - test -f localhost-key.pem
+        cmds:
+            - ./mkcert localhost
+        dir: dist
+
+    start_registry:
+        deps:
+            - task: create_localhost_cert
+        status:
+            - docker container inspect registry
+        cmds:
+            - docker compose up -d
+

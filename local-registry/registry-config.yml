@@ -1,0 +1,21 @@
+version: 0.1
+
+log:
+    fields:
+        service: registry
+storage:
+    filesystem:
+        rootdirectory: /var/lib/registry
+health:
+    storagedriver:
+        enabled: true
+        interval: 10s
+        threshold: 3
+
+http:
+    addr: :5000
+    secret: mysecret
+    tls:
+        certificate: /certs/localhost.pem
+        key: /certs/localhost-key.pem
+        clientauth: verify-client-cert-if-given

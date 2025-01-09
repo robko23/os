@@ -1,7 +1,13 @@
 version: '3'
 
+includes:
+    local-registry:
+        internal: true
+        dir: ./local-registry
+        taskfile: ./local-registry/Taskfile.yml
+
 vars:
-    REGISTRY: v2.registry.fohet.cz
+    REGISTRY: "localhost:5000"
     REGISTRY_NAMESPACE: robin_ilyk
     IMAGE_NAME_NTB: os-ntb
     IMAGE_NAME_WORKSTATION: os-workstation
@@ -41,9 +47,9 @@ tasks:
         cmds:
             -   task: build-workstation
             -   task: push-workstation
-            -   task: rebase
-                vars:
-                    IMAGE: "{{.IMG_WORKSTATION}}:{{.TAG}}"
+            # -   task: rebase
+            #     vars:
+            #         IMAGE: "{{.IMG_WORKSTATION}}:{{.TAG}}"
 
     build-workstation:
         vars:
@@ -71,6 +77,8 @@ tasks:
 
     build:
         internal: true
+        deps:
+            - task: "local-registry:start_registry"
         requires:
             vars:
                 - TAG
