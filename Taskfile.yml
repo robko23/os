@@ -41,15 +41,15 @@ tasks:
             - task: push-ntb
             -   task: rebase
                 vars:
-                    IMAGE: "{{.IMG_NTB}}:{{.TAG}}"
+                    IMAGE: "{{.IMG_NTB}}"
 
     workstation:
         cmds:
             -   task: build-workstation
             -   task: push-workstation
-            # -   task: rebase
-            #     vars:
-            #         IMAGE: "{{.IMG_WORKSTATION}}:{{.TAG}}"
+            -   task: rebase
+                vars:
+                    IMAGE: "{{.IMG_WORKSTATION}}"
 
     build-workstation:
         vars:
@@ -97,6 +97,12 @@ tasks:
     push-workstation:
         cmds:
             - docker push {{.IMG_WORKSTATION}}
+
+    rebase-workstation:
+        cmds:
+            -   task: rebase
+                vars:
+                    IMAGE: "{{.IMG_WORKSTATION}}"
 
     rebase:
         requires:
