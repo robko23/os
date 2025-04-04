@@ -36,7 +36,7 @@ cd $TEMPDIR
 
 BINDIR="/usr/bin"
 
-ZELLIJ_VERSION="0.42.0"
+ZELLIJ_VERSION="0.42.1"
 curl -LO https://github.com/zellij-org/zellij/releases/download/v$ZELLIJ_VERSION/zellij-x86_64-unknown-linux-musl.tar.gz
 tar xzvf zellij-x86_64-unknown-linux-musl.tar.gz
 chmod +x ./zellij
@@ -48,13 +48,13 @@ bzip2 -d autorestic_${AUTORESTIC_VERSION}_linux_amd64.bz2
 chmod +x autorestic_${AUTORESTIC_VERSION}_linux_amd64
 mv autorestic_${AUTORESTIC_VERSION}_linux_amd64 $BINDIR/autorestic
 
-RESTIC_VERSION="0.17.3"
+RESTIC_VERSION="0.18.0"
 curl -LO https://github.com/restic/restic/releases/download/v$RESTIC_VERSION/restic_${RESTIC_VERSION}_linux_amd64.bz2
 bzip2 -d restic_${RESTIC_VERSION}_linux_amd64.bz2
 chmod +x restic_${RESTIC_VERSION}_linux_amd64
 mv restic_${RESTIC_VERSION}_linux_amd64 $BINDIR/restic
 
-SYNCTHING_VERSION="1.29.3"
+SYNCTHING_VERSION="1.29.4"
 curl -LO https://github.com/syncthing/syncthing/releases/download/v$SYNCTHING_VERSION/syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 tar -xzvf syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/syncthing $BINDIR/syncthing
