@@ -43,6 +43,12 @@ tasks:
                 vars:
                     IMAGE: "{{.IMG_NTB}}"
 
+    rebase-ntb:
+        cmds:
+            -   task: rebase
+                vars:
+                    IMAGE: "{{.IMG_NTB}}"
+
     workstation:
         cmds:
             -   task: build-workstation
