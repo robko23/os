@@ -18,6 +18,7 @@ vars:
     TAG: "{{.TAG_DATEPART}}-{{.TAG_SUMPART}}"
     IMG_NTB: "{{.REGISTRY}}/{{.REGISTRY_NAMESPACE}}/{{.IMAGE_NAME_NTB}}:{{.TAG}}"
     IMG_WORKSTATION: "{{.REGISTRY}}/{{.REGISTRY_NAMESPACE}}/{{.IMAGE_NAME_WORKSTATION}}:{{.TAG}}"
+    SOURCE_TAG: 42
 
 tasks:
     default:
@@ -68,6 +69,7 @@ tasks:
               vars:
                   TAG: "{{.IMG_WORKSTATION}}"
                   SOURCE_SUFFIX: "{{.SOURCE_SUFFIX}}"
+                  SOURCE_TAG: "{{.SOURCE_TAG}}"
 
     build-ntb:
         vars:
@@ -80,6 +82,7 @@ tasks:
               vars:
                   TAG: "{{.IMG_NTB}}"
                   SOURCE_SUFFIX: "{{.SOURCE_SUFFIX}}"
+                  SOURCE_TAG: "{{.SOURCE_TAG}}"
 
     build:
         internal: true
@@ -89,10 +92,12 @@ tasks:
             vars:
                 - TAG
                 - SOURCE_SUFFIX
+                - SOURCE_TAG
         cmds:
             - docker buildx build 
                 -f Containerfile 
                 --build-arg SOURCE_SUFFIX={{.SOURCE_SUFFIX}}
+                --build-arg SOURCE_TAG={{.SOURCE_TAG}}
                 --tag {{.TAG}}
                 --load .
 

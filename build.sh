@@ -26,7 +26,7 @@ rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-
 rpm-ostree install \
 	bibata-cursor-themes gnome-tweaks fira-code-fonts keepassxc openrgb vlc vlc-plugin-pipewire \
 	earlyoom pam-u2f openssl python3-pip rclone \
-	fish ripgrep podman-compose neovim go-task eza bat yubikey-manager fd-find distrobox \
+	fish ripgrep podman-compose neovim go-task bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # ------------ START: INSTALL CUSTOM PROGRAMS ------------
@@ -81,6 +81,12 @@ chmod +x tldr
 mv tldr $BINDIR/tldr
 mv completions/tldr.bash /usr/share/bash-completion/completions/tldr
 mv completions/tldr.fish /usr/share/fish/completions/tldr.fish
+
+EZA_VERSION="0.21.3"
+curl -LO https://github.com/eza-community/eza/releases/download/v${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz
+tar -xzvf eza_x86_64-unknown-linux-gnu.tar.gz
+chmod +x eza
+mv eza $BINDIR/eza
 
 rm -rf $TEMPDIR
 # ------------ END: INSTALL CUSTOM PROGRAMS ------------
