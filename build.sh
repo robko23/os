@@ -36,7 +36,7 @@ cd $TEMPDIR
 
 BINDIR="/usr/bin"
 
-ZELLIJ_VERSION="0.42.1"
+ZELLIJ_VERSION="0.42.2"
 curl -LO https://github.com/zellij-org/zellij/releases/download/v$ZELLIJ_VERSION/zellij-x86_64-unknown-linux-musl.tar.gz
 tar xzvf zellij-x86_64-unknown-linux-musl.tar.gz
 chmod +x ./zellij
@@ -54,7 +54,7 @@ bzip2 -d restic_${RESTIC_VERSION}_linux_amd64.bz2
 chmod +x restic_${RESTIC_VERSION}_linux_amd64
 mv restic_${RESTIC_VERSION}_linux_amd64 $BINDIR/restic
 
-SYNCTHING_VERSION="1.29.5"
+SYNCTHING_VERSION="1.29.7"
 curl -LO https://github.com/syncthing/syncthing/releases/download/v$SYNCTHING_VERSION/syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 tar -xzvf syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/syncthing $BINDIR/syncthing
@@ -62,7 +62,7 @@ chmod +x $BINDIR/syncthing
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/etc/linux-desktop/* /usr/share/applications/
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/etc/linux-systemd/system/syncthing@.service /usr/lib/systemd/system/
 
-ZOXIDE_VERSION="0.9.7"
+ZOXIDE_VERSION="0.9.8"
 curl -LO https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/zoxide-${ZOXIDE_VERSION}-x86_64-unknown-linux-musl.tar.gz
 tar -xzvf zoxide-${ZOXIDE_VERSION}-x86_64-unknown-linux-musl.tar.gz
 cp zoxide $BINDIR/zoxide
@@ -74,7 +74,7 @@ gunzip cheat-linux-amd64.gz
 chmod +x cheat-linux-amd64
 mv cheat-linux-amd64 $BINDIR/cheat
 
-TLRC_VERSION="1.11.0"
+TLRC_VERSION="1.11.1"
 curl -LO https://github.com/tldr-pages/tlrc/releases/download/v${TLRC_VERSION}/tlrc-v${TLRC_VERSION}-x86_64-unknown-linux-musl.tar.gz
 tar -xzvf tlrc-v${TLRC_VERSION}-x86_64-unknown-linux-musl.tar.gz
 chmod +x tldr
@@ -82,7 +82,7 @@ mv tldr $BINDIR/tldr
 mv completions/tldr.bash /usr/share/bash-completion/completions/tldr
 mv completions/tldr.fish /usr/share/fish/completions/tldr.fish
 
-EZA_VERSION="0.21.3"
+EZA_VERSION="0.21.4"
 curl -LO https://github.com/eza-community/eza/releases/download/v${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz
 tar -xzvf eza_x86_64-unknown-linux-gnu.tar.gz
 chmod +x eza
