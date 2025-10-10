@@ -36,7 +36,7 @@ cd $TEMPDIR
 
 BINDIR="/usr/bin"
 
-ZELLIJ_VERSION="0.42.2"
+ZELLIJ_VERSION="0.43.1"
 curl -LO https://github.com/zellij-org/zellij/releases/download/v$ZELLIJ_VERSION/zellij-x86_64-unknown-linux-musl.tar.gz
 tar xzvf zellij-x86_64-unknown-linux-musl.tar.gz
 chmod +x ./zellij
@@ -48,13 +48,13 @@ bzip2 -d autorestic_${AUTORESTIC_VERSION}_linux_amd64.bz2
 chmod +x autorestic_${AUTORESTIC_VERSION}_linux_amd64
 mv autorestic_${AUTORESTIC_VERSION}_linux_amd64 $BINDIR/autorestic
 
-RESTIC_VERSION="0.18.0"
+RESTIC_VERSION="0.18.1"
 curl -LO https://github.com/restic/restic/releases/download/v$RESTIC_VERSION/restic_${RESTIC_VERSION}_linux_amd64.bz2
 bzip2 -d restic_${RESTIC_VERSION}_linux_amd64.bz2
 chmod +x restic_${RESTIC_VERSION}_linux_amd64
 mv restic_${RESTIC_VERSION}_linux_amd64 $BINDIR/restic
 
-SYNCTHING_VERSION="2.0.9"
+SYNCTHING_VERSION="2.0.10"
 curl -LO https://github.com/syncthing/syncthing/releases/download/v$SYNCTHING_VERSION/syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 tar -xzvf syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/syncthing $BINDIR/syncthing
@@ -74,7 +74,7 @@ gunzip cheat-linux-amd64.gz
 chmod +x cheat-linux-amd64
 mv cheat-linux-amd64 $BINDIR/cheat
 
-TLRC_VERSION="1.11.1"
+TLRC_VERSION="1.12.0"
 curl -LO https://github.com/tldr-pages/tlrc/releases/download/v${TLRC_VERSION}/tlrc-v${TLRC_VERSION}-x86_64-unknown-linux-musl.tar.gz
 tar -xzvf tlrc-v${TLRC_VERSION}-x86_64-unknown-linux-musl.tar.gz
 chmod +x tldr
@@ -82,7 +82,7 @@ mv tldr $BINDIR/tldr
 mv completions/tldr.bash /usr/share/bash-completion/completions/tldr
 mv completions/tldr.fish /usr/share/fish/completions/tldr.fish
 
-EZA_VERSION="0.21.4"
+EZA_VERSION="0.23.4"
 curl -LO https://github.com/eza-community/eza/releases/download/v${EZA_VERSION}/eza_x86_64-unknown-linux-gnu.tar.gz
 tar -xzvf eza_x86_64-unknown-linux-gnu.tar.gz
 chmod +x eza
