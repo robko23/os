@@ -17,10 +17,6 @@ curl -o /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:peterwu:rendezvous.repo
 # Docker repos
 curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora/docker-ce.repo
 
-# Maybe in dev env container: mold 
-# https://github.com/Infisical/infisical/releases/download/infisical-cli%2Fv0.31.1/infisical_0.31.1_linux_amd64.rpm
-# curl -1sLf 'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.rpm.sh' | sudo -E bash
-
 #### Install packages
 rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-common
 rpm-ostree install \
@@ -54,7 +50,7 @@ bzip2 -d restic_${RESTIC_VERSION}_linux_amd64.bz2
 chmod +x restic_${RESTIC_VERSION}_linux_amd64
 mv restic_${RESTIC_VERSION}_linux_amd64 $BINDIR/restic
 
-SYNCTHING_VERSION="2.0.10"
+SYNCTHING_VERSION="2.0.11"
 curl -LO https://github.com/syncthing/syncthing/releases/download/v$SYNCTHING_VERSION/syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 tar -xzvf syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/syncthing $BINDIR/syncthing
