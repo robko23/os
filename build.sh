@@ -20,10 +20,13 @@ curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora
 #### Install packages
 rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-common
 rpm-ostree install \
-	bibata-cursor-themes gnome-tweaks fira-code-fonts keepassxc openrgb vlc vlc-plugin-pipewire \
+	bibata-cursor-themes gnome-tweaks fira-code-fonts keepassxc vlc vlc-plugin-pipewire \
 	earlyoom pam-u2f openssl python3-pip rclone \
 	fish ripgrep podman-compose neovim go-task bat yubikey-manager fd-find distrobox \
-	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
+	gnupg2-scdaemon 
+
+# gnupg2-scdaemon was removed in f43 - https://discussion.fedoraproject.org/t/gpg-with-yubikeys-on-fedora-43-scdaemon-removed/170981
 
 # ------------ START: INSTALL CUSTOM PROGRAMS ------------
 TEMPDIR=`mktemp -d`

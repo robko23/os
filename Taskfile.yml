@@ -21,11 +21,6 @@ vars:
     SOURCE_TAG: 43
 
 tasks:
-    default:
-        deps:
-            - task: ntb
-            - task: workstation
-
     getver-*:
         vars:
             REPO: "{{index .MATCH 0}}"
