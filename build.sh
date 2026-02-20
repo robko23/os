@@ -24,7 +24,7 @@ rpm-ostree install \
 	earlyoom pam-u2f openssl python3-pip rclone plocate \
 	fish ripgrep podman-compose neovim go-task bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	gnupg2-scdaemon chezmoi
+	gnupg2-scdaemon chezmoi @virtualization
 
 # gnupg2-scdaemon was removed in f43 - https://discussion.fedoraproject.org/t/gpg-with-yubikeys-on-fedora-43-scdaemon-removed/170981
 
@@ -53,7 +53,7 @@ bzip2 -d restic_${RESTIC_VERSION}_linux_amd64.bz2
 chmod +x restic_${RESTIC_VERSION}_linux_amd64
 mv restic_${RESTIC_VERSION}_linux_amd64 $BINDIR/restic
 
-SYNCTHING_VERSION="2.0.13"
+SYNCTHING_VERSION="2.0.14"
 curl -LO https://github.com/syncthing/syncthing/releases/download/v$SYNCTHING_VERSION/syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 tar -xzvf syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/syncthing $BINDIR/syncthing
