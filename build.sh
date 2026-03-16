@@ -18,7 +18,6 @@ curl -o /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:peterwu:rendezvous.repo
 curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora/docker-ce.repo
 
 VIRTUALIZATION="libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm virt-manager virt-viewer guestfs-tools python3-libguestfs virt-top"
-
 #### Install packages
 rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-common
 rpm-ostree install \
