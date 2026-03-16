@@ -17,6 +17,8 @@ curl -o /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:peterwu:rendezvous.repo
 # Docker repos
 curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora/docker-ce.repo
 
+VIRTUALIZATION="libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm virt-manager virt-viewer guestfs-tools python3-libguestfs virt-top"
+
 #### Install packages
 rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-common
 rpm-ostree install \
@@ -24,7 +26,8 @@ rpm-ostree install \
 	earlyoom pam-u2f openssl python3-pip rclone plocate \
 	fish ripgrep podman-compose neovim go-task bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	gnupg2-scdaemon chezmoi @virtualization
+	gnupg2-scdaemon chezmoi $VIRTUALIZATION \
+	postgresql18 # client programs
 
 # gnupg2-scdaemon was removed in f43 - https://discussion.fedoraproject.org/t/gpg-with-yubikeys-on-fedora-43-scdaemon-removed/170981
 
@@ -108,9 +111,9 @@ rm -rf $TEMPDIR
 
 
 # ------------ START: SETUP SYMLINKS ------------
-ln -s /usr/bin/go-task /usr/bin/task
-ln -s /usr/bin/nvim /usr/bin/vim
-ln -s /usr/bin/nvim /usr/bin/vi
+ln -fs /usr/bin/go-task /usr/bin/task
+ln -fs /usr/bin/nvim /usr/bin/vim
+ln -fs /usr/bin/nvim /usr/bin/vi
 # ------------ END: SETUP SYMLINKS ------------
 
 
