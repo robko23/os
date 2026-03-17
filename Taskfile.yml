@@ -111,8 +111,11 @@ tasks:
                     IMAGE: "{{.IMG_WORKSTATION}}"
 
     rebase:
+        preconditions:
+            -   sh: test $(id -u) -eq 0
+                msg: This task must be run as root
         requires:
             vars:
                 - IMAGE
         cmds:
-            - "sudo rpm-ostree rebase ostree-unverified-registry:{{.IMAGE}}"
+            - "rpm-ostree rebase ostree-unverified-registry:{{.IMAGE}}"

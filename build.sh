@@ -26,7 +26,7 @@ rpm-ostree install \
 	earlyoom pam-u2f openssl python3-pip rclone plocate \
 	fish ripgrep podman-compose neovim go-task bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	gnupg2-scdaemon chezmoi $VIRTUALIZATION \
+	gnupg2-scdaemon chezmoi age $VIRTUALIZATION \
 	postgresql18 # client programs
 
 # gnupg2-scdaemon was removed in f43 - https://discussion.fedoraproject.org/t/gpg-with-yubikeys-on-fedora-43-scdaemon-removed/170981
