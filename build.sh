@@ -38,7 +38,7 @@ cd $TEMPDIR
 
 BINDIR="/usr/bin"
 
-ZELLIJ_VERSION="0.43.1"
+ZELLIJ_VERSION="0.44.0"
 curl -LO https://github.com/zellij-org/zellij/releases/download/v$ZELLIJ_VERSION/zellij-x86_64-unknown-linux-musl.tar.gz
 tar xzvf zellij-x86_64-unknown-linux-musl.tar.gz
 chmod +x ./zellij
@@ -56,7 +56,7 @@ bzip2 -d restic_${RESTIC_VERSION}_linux_amd64.bz2
 chmod +x restic_${RESTIC_VERSION}_linux_amd64
 mv restic_${RESTIC_VERSION}_linux_amd64 $BINDIR/restic
 
-SYNCTHING_VERSION="2.0.14"
+SYNCTHING_VERSION="2.0.15"
 curl -LO https://github.com/syncthing/syncthing/releases/download/v$SYNCTHING_VERSION/syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 tar -xzvf syncthing-linux-amd64-v${SYNCTHING_VERSION}.tar.gz
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/syncthing $BINDIR/syncthing
@@ -64,13 +64,13 @@ chmod +x $BINDIR/syncthing
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/etc/linux-desktop/* /usr/share/applications/
 mv syncthing-linux-amd64-v${SYNCTHING_VERSION}/etc/linux-systemd/system/syncthing@.service /usr/lib/systemd/system/
 
-ZOXIDE_VERSION="0.9.8"
+ZOXIDE_VERSION="0.9.9"
 curl -LO https://github.com/ajeetdsouza/zoxide/releases/download/v${ZOXIDE_VERSION}/zoxide-${ZOXIDE_VERSION}-x86_64-unknown-linux-musl.tar.gz
 tar -xzvf zoxide-${ZOXIDE_VERSION}-x86_64-unknown-linux-musl.tar.gz
 cp zoxide $BINDIR/zoxide
 chmod +x $BINDIR/zoxide
 
-CHEAT_VERSION="4.4.2"
+CHEAT_VERSION="5.1.0"
 curl -LO https://github.com/cheat/cheat/releases/download/${CHEAT_VERSION}/cheat-linux-amd64.gz
 gunzip cheat-linux-amd64.gz
 chmod +x cheat-linux-amd64
