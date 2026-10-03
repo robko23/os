@@ -135,6 +135,27 @@ EOF
 
 systemctl enable docker
 
+#### Machine-specific bits (Taskfile passes MACHINE=ntb for the laptop image)
+if [ "${MACHINE:-}" = "ntb" ]; then
+    # Yoga 7i S3 deep sleep: DSDT override packed into the initramfs by dracut
+    # via /etc/dracut.conf.d/20-yoga7i-s3.conf, plus a boot-time check that
+    # fails when a BIOS update invalidates the baked table
+    # (see scripts/dsdt/ in the repo). Requires Secure Boot to stay off.
+    cp -a /ntb-rootfs/. /
+    systemctl enable dsdt-override-check.service
+
+    # Bake the initramfs into the image. libostree's deploy-time kernel layout
+    # pairs the kernel in /usr/lib/modules/<kver> with an initramfs named
+    # initramfs.img in the SAME directory, and the base image already ships one
+    # there — a copy in /usr/lib/ostree-boot/ would be ignored. Overwrite it
+    # here, where the kernel, its config and the ACPI table are all local.
+    kver="$(ls -1 /usr/lib/modules | head -n1)"
+    dracut --reproducible --add ostree -f "/usr/lib/modules/$kver/initramfs.img" "$kver"
+    chmod 0644 "/usr/lib/modules/$kver/initramfs.img"
+	
+fi
+rm -rf /ntb-rootfs
+
 #### Flatpaks - won't install in build-step
 
 # flatpak install -y com.bitwarden.desktop

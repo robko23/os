@@ -56,6 +56,7 @@ tasks:
     build-workstation:
         vars:
           SOURCE_SUFFIX: "-nvidia"
+          MACHINE: "workstation"
         requires:
             vars:
                 - IMG_WORKSTATION
@@ -65,10 +66,12 @@ tasks:
                   TAG: "{{.IMG_WORKSTATION}}"
                   SOURCE_SUFFIX: "{{.SOURCE_SUFFIX}}"
                   SOURCE_TAG: "{{.SOURCE_TAG}}"
+                  MACHINE: "{{.MACHINE}}"
 
     build-ntb:
         vars:
           SOURCE_SUFFIX: "-main"
+          MACHINE: "ntb"
         requires:
             vars:
                 - IMG_NTB
@@ -78,6 +81,7 @@ tasks:
                   TAG: "{{.IMG_NTB}}"
                   SOURCE_SUFFIX: "{{.SOURCE_SUFFIX}}"
                   SOURCE_TAG: "{{.SOURCE_TAG}}"
+                  MACHINE: "{{.MACHINE}}"
 
     build:
         internal: true
@@ -88,11 +92,13 @@ tasks:
                 - TAG
                 - SOURCE_SUFFIX
                 - SOURCE_TAG
+                - MACHINE
         cmds:
-            - docker buildx build 
-                -f Containerfile 
+            - docker buildx build
+                -f Containerfile
                 --build-arg SOURCE_SUFFIX={{.SOURCE_SUFFIX}}
                 --build-arg SOURCE_TAG={{.SOURCE_TAG}}
+                --build-arg MACHINE={{.MACHINE}}
                 --tag {{.TAG}}
                 --load .
 

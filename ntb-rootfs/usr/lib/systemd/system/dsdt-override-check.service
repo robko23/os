@@ -1,0 +1,11 @@
+[Unit]
+Description=Yoga 7i: verify the DSDT override (S3 sleep) is active and current
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/dsdt-override-check
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

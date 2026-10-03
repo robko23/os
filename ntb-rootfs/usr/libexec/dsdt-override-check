@@ -1,0 +1,37 @@
+#!/bin/bash
+# Boot-time sanity check for the Yoga 7i DSDT override (S3 sleep). Verifies:
+#   1. the DSDT override from the initramfs is actually active (kernel log)
+#   2. the firmware DSDT still matches the stored copy, i.e. the BIOS has not
+#      been updated since the table was patched (a BIOS update invalidates the
+#      override; regenerate it with scripts/dsdt/ in the OS repo)
+set -euo pipefail
+
+firmware=/sys/firmware/acpi/tables/DSDT
+patched=/etc/dracut.conf.d/yoga7i-acpi/DSDT.aml
+orig=/usr/share/dsdt-override/DSDT.orig.aml
+
+fail() { echo "dsdt-override-check: FAIL: $*" >&2; exit 1; }
+
+[ -r "$firmware" ] || fail "cannot read $firmware"
+for f in "$patched" "$orig"; do
+    [ -r "$f" ] || fail "missing $f (image packaging broken?)"
+done
+
+kernel_log() { dmesg 2>/dev/null || journalctl -kq -o cat; }
+
+if ! kernel_log | grep -q 'Table Upgrade: override \[DSDT-'; then
+    fail "the DSDT override is NOT active (no 'Table Upgrade: override' line in the kernel log). Secure Boot re-enabled? dracut config missing?"
+fi
+
+fw=$(sha256sum "$firmware" | awk '{print $1}')
+p=$(sha256sum "$patched" | awk '{print $1}')
+o=$(sha256sum "$orig" | awk '{print $1}')
+
+case "$fw" in
+    "$p" | "$o")
+        echo "dsdt-override-check: OK (override active, firmware DSDT unchanged)"
+        ;;
+    *)
+        fail "firmware DSDT differs from both stored copies — BIOS updated? Regenerate: scripts/dsdt/extract-dsdt.sh (from the rollback deployment) + patch-dsdt.sh, then rebuild and upgrade."
+        ;;
+esac
