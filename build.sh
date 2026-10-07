@@ -17,6 +17,8 @@ curl -o /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:peterwu:rendezvous.repo
 # Docker repos
 curl -o /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/fedora/docker-ce.repo
 
+# postgresql18 - only client programs
+
 VIRTUALIZATION="libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm virt-manager virt-viewer guestfs-tools python3-libguestfs virt-top"
 #### Install packages
 rpm-ostree override remove vim-data vim-minimal vim-filesystem vim-enhanced vim-common
@@ -26,9 +28,13 @@ rpm-ostree install \
 	fish ripgrep podman-compose neovim go-task bat yubikey-manager fd-find distrobox \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	gnupg2-scdaemon chezmoi age $VIRTUALIZATION \
-	postgresql18 # client programs
-
+	postgresql18
 # gnupg2-scdaemon was removed in f43 - https://discussion.fedoraproject.org/t/gpg-with-yubikeys-on-fedora-43-scdaemon-removed/170981
+
+if [ "${MACHINE:-}" = "ntb" ]; then
+	# i2c-tools - enables access to raw i2c bus - to be able to reset touchpad when it shits the bed
+	rpm-ostree install i2c-tools
+fi
 
 # ------------ START: INSTALL CUSTOM PROGRAMS ------------
 TEMPDIR=`mktemp -d`
