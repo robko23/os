@@ -5,6 +5,16 @@ setting `SS3 = Zero` in the DSDT, although the firmware implements S3. The fix
 is to override the DSDT from the initramfs with a patched copy:
 https://wiki.archlinux.org/title/Lenovo_Yoga_7i#Activating_S3_sleep
 
+The same override carries a second patch (disable with `TP_ECTP_PR0=0`): the
+ELAN touchpad (`TPD0`, 04F3:3138) gets a `PowerResource (TPPR)` wired to the
+EC touchpad-enable flag (`ECTP`, EC MMIO @ 0xFE0B0443, written by
+`TPD0.TPWR`). With `_PR0` in place the kernel power-cycles the pad from the
+OS: driver unbind → `_PS3` → `ECTP=0`, bind → `_PS0` → `ECTP=1` (firmware
+cold boot). This is the recovery path used by `~/touchpad-recover.sh` for the
+touchpad-wedge issue. Verify after deploy:
+`cat /sys/bus/i2c/devices/i2c-MSFT0001:01/power/runtime_status` must be
+`active`, not `unsupported`.
+
 ## How it works, end to end
 
 1. `scripts/dsdt/extract-dsdt.sh` (host, sudo) dumps the firmware DSDT;
